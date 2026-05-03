@@ -16,8 +16,6 @@ form.addEventListener("submit", (event) => {
 
   getImagesByQuery(query)
     .then(data => {
-      hideLoader();
-
       if (data.hits.length === 0) {
         iziToast.error({
           message: "Sorry, there are no images matching your search query. Please try again!",
@@ -28,7 +26,9 @@ form.addEventListener("submit", (event) => {
       createGallery(data.hits);
     })
     .catch(() => {
-      hideLoader();
       iziToast.error({ message: "Something went wrong. Please try again!" });
+    })
+    .finally(() => {
+      hideLoader();
     });
 });
